@@ -11,7 +11,7 @@ var pathSrcHtml = [
 ];
 
 var pathSrcJs = [
-  path.join(conf.paths.tmp, '/serve/main/webapp/index.module.js')
+  path.join(conf.paths.tmp, '/serve/webapp/index.module.js')
 ];
 
 function runTests (singleRun, done) {

@@ -15,9 +15,10 @@ gulp.task('watch', ['scripts:watch', 'inject'], function () {
   gulp.watch([path.join(conf.paths.src, '/*.html'), 'bower.json'], ['inject']);
 
   gulp.watch([
-    path.join(conf.paths.src, '/main/webapp/**/*.css'),
-    path.join(conf.paths.src, '/main/webapp/**/*.scss')
+    path.join(conf.paths.src, '/webapp/**/*.css'),
+    path.join(conf.paths.src, '/webapp/**/*.scss')
   ], function(event) {
+    console.log(event);
     if(isOnlyChange(event)) {
       gulp.start('styles');
     } else {
@@ -26,7 +27,7 @@ gulp.task('watch', ['scripts:watch', 'inject'], function () {
   });
 
 
-  gulp.watch(path.join(conf.paths.src, '/main/webapp/**/*.html'), function(event) {
+  gulp.watch(path.join(conf.paths.src, '/webapp/**/*.html'), function(event) {
     browserSync.reload(event.path);
   });
 });

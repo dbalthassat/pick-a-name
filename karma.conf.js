@@ -18,7 +18,7 @@ function listFiles() {
 
   return wiredep(wiredepOptions).js
     .concat([
-      path.join(conf.paths.tmp, '/serve/main/webapp/index.module.js'),
+      path.join(conf.paths.tmp, '/serve/webapp/index.module.js'),
     ])
     .concat(pathSrcHtml);
 }
