@@ -1,0 +1,17 @@
+<md-content>
+  <section class="jumbotron">
+    <h1>Tu participes à l'évènement <em>{{ event.eventName }}</em> !</h1>
+  </section>
+  <section layout="column" layout-align="center center">
+    <form class="lead">
+      <md-input-container>
+        <label>Quel est ton prénom ?</label>
+        <input ng-model="event.firstname">
+      </md-input-container>
+      <md-input-container>
+        <md-button class="md-raised" ng-click="event.register()">Je participe !</md-button>
+      </md-input-container>
+    </form>
+  </section>
+</md-content>
+

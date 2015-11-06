@@ -1,4 +1,4 @@
-export function config ($logProvider, toastrConfig, $locationProvider) {
+export function config ($logProvider, toastrConfig, $locationProvider, RestangularProvider) {
   'ngInject';
   // Enable log
   $logProvider.debugEnabled(true);
@@ -12,4 +12,7 @@ export function config ($logProvider, toastrConfig, $locationProvider) {
   toastrConfig.positionClass = 'toast-top-right';
   toastrConfig.preventDuplicates = true;
   toastrConfig.progressBar = true;
+
+  // RestAngular
+  RestangularProvider.setBaseUrl('./api/');
 }

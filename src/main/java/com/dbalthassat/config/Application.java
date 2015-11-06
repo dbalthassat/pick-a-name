@@ -14,7 +14,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 
 @SpringBootApplication
 @ComponentScan("com.dbalthassat")
-@EntityScan("com.dbalthassat.dto")
+@EntityScan("com.dbalthassat.entity")
 @EnableJpaRepositories(basePackages = "com.dbalthassat.repository")
 public class Application {
     @Bean
