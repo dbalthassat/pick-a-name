@@ -14,17 +14,15 @@ public class EventPersonController {
 	@Autowired
 	private EventRepository eventRepository;
 
-	@RequestMapping(value = "/{eventId}/{personId}", produces = "application/json; charset=utf-8")
-	public EventPerson findEventPerson(@PathVariable Long eventId, @PathVariable Long personId) {
+	@RequestMapping(value = "/{eventId}/{firstname}", produces = "application/json; charset=utf-8")
+	public EventPerson findEventPerson(@PathVariable Long eventId, @PathVariable String firstname) {
 		Event event = eventRepository.findOne(eventId);
 		if(event == null) {
 			return null;
 		}
-		for(EventPerson eventPerson: event.getEventPersons()) {
-			if(eventPerson.getPerson().getId().equals(personId)) {
-				return eventPerson;
-			}
-		}
-		return null;
+		return event.getEventPersons().stream()
+				.filter(e -> e.getPerson().getName().equals(firstname))
+				.findAny()
+				.orElse(null);
 	}
 }

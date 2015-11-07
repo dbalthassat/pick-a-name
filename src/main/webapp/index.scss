@@ -5,6 +5,8 @@
 // bower:scss
 // endbower
 
+$tablet: "only screen and (max-width: 600px)";
+
 @import url(http://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Roboto:400,700,700italic,400italic);
 
 @font-face {
@@ -72,7 +74,16 @@ section.jumbotron {
   color: white;
 
   h1 {
-    font-size: 3em;
+	font-size: 3em;
+  }
+}
+
+section.center {
+  width:50%;
+  margin:auto;
+
+  @media #{$tablet} {
+	width:100%;
   }
 }
 
@@ -81,12 +92,12 @@ section.jumbotron {
   flex-flow: row wrap;
 
   md-card {
-    width: 30%;
+	width: 30%;
 
-    img.pull-right {
-      float: right;
-      width: 100px;
-    }
+	img.pull-right {
+	  float: right;
+	  width: 100px;
+	}
   }
 }
 
