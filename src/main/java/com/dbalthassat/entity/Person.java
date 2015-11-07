@@ -18,14 +18,14 @@ public class Person implements Serializable {
     @NotBlank
     private String name;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.person", cascade = CascadeType.ALL)
-	@JsonManagedReference("person")
-	private Set<EventPerson> eventPersons = new HashSet<>();
-
     public Person() {
     }
 
-    public Person(long id, String name) {
+	public Person(Long id) {
+		this.id = id;
+	}
+
+	public Person(long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -45,12 +45,4 @@ public class Person implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-	public Set<EventPerson> getEventPersons() {
-		return eventPersons;
-	}
-
-	public void setEventPersons(Set<EventPerson> eventPersons) {
-		this.eventPersons = eventPersons;
-	}
 }

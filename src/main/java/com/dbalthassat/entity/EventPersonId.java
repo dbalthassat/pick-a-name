@@ -15,8 +15,15 @@ public class EventPersonId implements Serializable {
 	private Event event;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonBackReference("person")
 	private Person person;
+
+	public EventPersonId() {
+	}
+
+	public EventPersonId(Event event, Person person) {
+		this.event = event;
+		this.person = person;
+	}
 
 	public Event getEvent() {
 		return event;

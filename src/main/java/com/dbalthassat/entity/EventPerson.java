@@ -1,6 +1,9 @@
 package com.dbalthassat.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,9 +18,11 @@ import java.io.Serializable;
 })
 public class EventPerson implements Serializable {
 	@EmbeddedId
+	@JsonIgnore
 	private EventPersonId pk = new EventPersonId();
 
 	@OneToOne
+	@JsonIgnore
 	private Person friend;
 
 	public EventPerson() {}
@@ -28,6 +33,7 @@ public class EventPerson implements Serializable {
 	}
 
 	@Transient
+	@JsonBackReference("event")
 	public Event getEvent() {
 		return pk.getEvent();
 	}
@@ -37,8 +43,9 @@ public class EventPerson implements Serializable {
 		return pk.getPerson();
 	}
 
-	public EventPersonId getPk() {
-		return pk;
+	@Transient
+	public boolean getHasFriend() {
+		return friend != null;
 	}
 
 	public void setPk(EventPersonId pk) {

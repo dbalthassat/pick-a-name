@@ -1,6 +1,7 @@
 package com.dbalthassat.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -23,7 +24,7 @@ public class Event implements Serializable {
     private String slug;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.event", cascade = CascadeType.ALL)
-	@JsonManagedReference("event")
+	@JsonIgnore
     private Set<EventPerson> eventPersons = new HashSet<>();
 
     public Event() {
