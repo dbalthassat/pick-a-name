@@ -1,20 +1,20 @@
 package com.dbalthassat.entity;
 
+import com.dbalthassat.entity.listener.SlugEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "event", schema = "public")
-public class Event implements Serializable {
+@EntityListeners(SlugEntityListener.class)
+public class Event implements Serializable, Slugable {
     @Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotBlank
@@ -62,7 +62,12 @@ public class Event implements Serializable {
       return slug;
     }
 
-    public void setSlug(String slug) {
+	public void setSlug(String slug) {
       this.slug = slug;
     }
+
+	@Override
+	public String itemToSlug() {
+		return name;
+	}
 }

@@ -1,9 +1,6 @@
 package com.dbalthassat.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,7 +30,6 @@ public class EventPerson implements Serializable {
 	}
 
 	@Transient
-	@JsonBackReference("event")
 	public Event getEvent() {
 		return pk.getEvent();
 	}

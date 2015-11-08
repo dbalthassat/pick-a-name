@@ -3,7 +3,6 @@ package com.dbalthassat.controller;
 import com.dbalthassat.entity.Event;
 import com.dbalthassat.entity.EventPerson;
 import com.dbalthassat.entity.Person;
-import com.dbalthassat.repository.EventPersonRepository;
 import com.dbalthassat.repository.EventRepository;
 import com.dbalthassat.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +23,15 @@ public class EventController {
 	@Autowired
 	private EventRepository eventRepository;
 
-	@Autowired
-	private EventPersonRepository eventPersonRepository;
-
 	@RequestMapping(value = {"", "/"}, produces = "application/json; charset=utf-8")
 	@Transactional
 	public Event event() {
-		Event e = new Event(1L);
+		Event e = new Event();
 		e.setName("HTG");
-		e.setSlug("htg");
 		eventRepository.save(e);
 
-		Person p1 = new Person(1L, "Élise");
-		Person p2 = new Person(2L, "Damien");
+		Person p1 = new Person("Élise");
+		Person p2 = new Person("Damien");
 		personRepository.save(p1);
 		personRepository.save(p2);
 
@@ -44,7 +39,6 @@ public class EventController {
 		persons.add(new EventPerson(e, p1));
 		persons.add(new EventPerson(e, p2));
 		e.getEventPersons().addAll(persons);
-		eventPersonRepository.save(persons);
 
 		return e;
 	}

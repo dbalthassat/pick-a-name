@@ -1,18 +1,15 @@
 package com.dbalthassat.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "person", schema = "public")
 public class Person implements Serializable {
     @Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotBlank
@@ -21,11 +18,7 @@ public class Person implements Serializable {
     public Person() {
     }
 
-	public Person(Long id) {
-		this.id = id;
-	}
-
-	public Person(long id, String name) {
+	public Person(String name) {
         this.id = id;
         this.name = name;
     }
