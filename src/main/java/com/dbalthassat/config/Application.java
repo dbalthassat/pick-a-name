@@ -20,7 +20,7 @@ public class Application {
     @Bean
     public ObjectMapper objectMapper() {
         HibernateAwareObjectMapper hibernateAwareObjectMapper = new HibernateAwareObjectMapper();
-        hibernateAwareObjectMapper.setSerializationInclusion(JsonInclude.Include.ALWAYS);
+        hibernateAwareObjectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
         return hibernateAwareObjectMapper;
     }
 

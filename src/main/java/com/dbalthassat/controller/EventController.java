@@ -3,16 +3,23 @@ package com.dbalthassat.controller;
 import com.dbalthassat.entity.Event;
 import com.dbalthassat.entity.EventPerson;
 import com.dbalthassat.entity.Person;
+import com.dbalthassat.exception.BadRequestException;
 import com.dbalthassat.repository.EventRepository;
 import com.dbalthassat.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.MimeType;
+import org.springframework.util.MimeTypeUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.groups.Default;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/event")
@@ -23,9 +30,9 @@ public class EventController {
 	@Autowired
 	private EventRepository eventRepository;
 
-	@RequestMapping(value = {"", "/"}, produces = "application/json; charset=utf-8")
+	@RequestMapping(value = "/init", produces = "application/json; charset=utf-8")
 	@Transactional
-	public Event event() {
+	public Event init() {
 		Event e = new Event();
 		e.setName("HTG");
 		eventRepository.save(e);
@@ -43,7 +50,30 @@ public class EventController {
 		return e;
 	}
 
-	@RequestMapping(value = "/{id}", produces = "application/json; charset=utf-8")
+	@SuppressWarnings("MVCPathVariableInspection")
+	@RequestMapping(value = {"/", "/{id}"}, method = RequestMethod.POST, consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
+	@Transactional
+	public Event createEvent(@Validated(Event.Create.class) @RequestBody Event event,
+							BindingResult result) throws BadRequestException {
+		if(result.hasErrors()) {
+			throw new BadRequestException(result.getAllErrors().toString());
+		}
+		personRepository.save(event.getPersons().stream().map(Person::new).collect(Collectors.toList()));
+		eventRepository.save(event);
+		return event;
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@ResponseStatus(value = HttpStatus.FORBIDDEN)
+	public void deleteEvent(@PathVariable Long id) {
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	@ResponseStatus(value = HttpStatus.FORBIDDEN)
+	public void updateEvent(@PathVariable Long id) {
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	public Event findEvent(@PathVariable Long id) {
 		return eventRepository.findOne(id);
 	}
