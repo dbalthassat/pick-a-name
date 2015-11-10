@@ -10,8 +10,10 @@ public class SlugUtils {
 		Objects.requireNonNull(str);
 		str = Normalizer.normalize(str, Normalizer.Form.NFD);
 		return str.trim()
-		          .toLowerCase()
-				  .replaceAll("\\s+", "-")
-				  .replaceAll("[^a-z0-9-]", "");
+				.toLowerCase()
+				.replaceAll("[^a-z0-9 ]", "")
+				.trim()
+				.replaceAll("\\s+", "-")
+				.replaceAll("[^a-z0-9-]", "");
 	}
 }

@@ -54,4 +54,9 @@ public class SlugUtilsTest {
 	public void createSlugWithSpecialCharacters() {
 		assertEquals("i-dont-understand", SlugUtils.createSlug("I don't understand"));
 	}
+
+	@Test
+	public void createSlugWithStartingWithHyphen() {
+		assertEquals("i-dont-understand", SlugUtils.createSlug("-I don't understand"));
+	}
 }
