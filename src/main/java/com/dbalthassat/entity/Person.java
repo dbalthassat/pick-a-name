@@ -19,7 +19,6 @@ public class Person implements Serializable {
     }
 
 	public Person(String name) {
-        this.id = id;
         this.name = name;
     }
 

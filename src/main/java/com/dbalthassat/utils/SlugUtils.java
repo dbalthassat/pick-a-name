@@ -11,8 +11,7 @@ public class SlugUtils {
 		str = Normalizer.normalize(str, Normalizer.Form.NFD);
 		return str.trim()
 		          .toLowerCase()
-				  .replaceAll("\\s+", " ")
-				  .replaceAll(" ", "-")
+				  .replaceAll("\\s+", "-")
 				  .replaceAll("[^a-z0-9-]", "");
 	}
 }
