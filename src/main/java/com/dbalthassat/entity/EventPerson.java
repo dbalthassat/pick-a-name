@@ -39,11 +39,6 @@ public class EventPerson implements Serializable {
 		return pk.getPerson();
 	}
 
-	@Transient
-	public boolean getHasFriend() {
-		return friend != null;
-	}
-
 	public void setPk(EventPersonId pk) {
 		this.pk = pk;
 	}

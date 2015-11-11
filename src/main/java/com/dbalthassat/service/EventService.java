@@ -1,30 +1,28 @@
 package com.dbalthassat.service;
 
+import com.dbalthassat.dto.EventDTO;
 import com.dbalthassat.entity.Event;
-import com.dbalthassat.entity.EventPerson;
-import com.dbalthassat.repository.EventRepository;
-import com.dbalthassat.repository.PersonRepository;
+import com.dbalthassat.exception.NotFoundException;
+import com.dbalthassat.mapper.EventMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EventService {
 	@Autowired
-	private EventRepository eventRepository;
+	private EventEntityService entityService;
 
-	@Autowired
-	private PersonRepository personRepository;
-
-	public Event create(Event event) {
-		event.getEventPersons().stream().map(EventPerson::getPerson).forEach(p -> {
-			if(p.getId() == null) {
-				personRepository.save(p);
-			}
-		});
-		return eventRepository.save(event);
+	public EventDTO create(EventDTO event) {
+		Event entity = EventMapper.map(event);
+		EventDTO dto = EventMapper.map(entityService.create(entity));
+		return EventMapper.mapPersons(entity, dto);
 	}
 
-	public Event find(Long id) {
-		return eventRepository.findOne(id);
+	public EventDTO find(Long id) throws NotFoundException {
+		Event event = entityService.find(id);
+		if(event == null) {
+			throw new NotFoundException("The event " + id + " doesn't exist.");
+		}
+		return EventMapper.map(event);
 	}
 }

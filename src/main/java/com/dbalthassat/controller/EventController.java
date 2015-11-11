@@ -3,7 +3,7 @@ package com.dbalthassat.controller;
 import com.dbalthassat.dto.EventDTO;
 import com.dbalthassat.dto.groups.Create;
 import com.dbalthassat.exception.BadRequestException;
-import com.dbalthassat.mapper.EventMapper;
+import com.dbalthassat.exception.NotFoundException;
 import com.dbalthassat.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,11 +26,11 @@ public class EventController {
 		if(result.hasErrors()) {
 			throw new BadRequestException(result.getAllErrors().toString());
 		}
-		return EventMapper.map(eventService.create(EventMapper.map(event)));
+		return eventService.create(event);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
-	public EventDTO findEvent(@PathVariable Long id) {
-		return EventMapper.mapToDisplay(eventService.find(id));
+	public EventDTO findEvent(@PathVariable Long id) throws NotFoundException {
+		return eventService.find(id);
 	}
 }
