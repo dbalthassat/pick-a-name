@@ -4,6 +4,8 @@ import com.dbalthassat.dto.PersonDTO;
 import com.dbalthassat.entity.EventPerson;
 import com.dbalthassat.entity.Person;
 
+import java.util.Objects;
+
 public class PersonMapper {
 	public static PersonDTO map(EventPerson eventPerson) {
 		if(eventPerson == null) {
@@ -22,5 +24,12 @@ public class PersonMapper {
 		dto.setId(person.getId());
 		dto.setName(person.getName());
 		return dto;
+	}
+
+	public static PersonDTO mapFriend(EventPerson op, PersonDTO person) {
+		Objects.requireNonNull(op);
+		Objects.requireNonNull(person);
+		person.setFriend(op.getFriend() != null ? op.getFriend().getName() : "");
+		return person;
 	}
 }

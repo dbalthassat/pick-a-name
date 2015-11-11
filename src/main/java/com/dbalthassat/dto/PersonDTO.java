@@ -4,6 +4,7 @@ public class PersonDTO {
 	private Long id;
 	private String name;
 	private Boolean hasFriend;
+	private String friend;
 
 	public Long getId() {
 		return id;
@@ -27,5 +28,13 @@ public class PersonDTO {
 
 	public void setHasFriend(Boolean hasFriend) {
 		this.hasFriend = hasFriend;
+	}
+
+	public String getFriend() {
+		return friend;
+	}
+
+	public void setFriend(String friend) {
+		this.friend = friend;
 	}
 }
