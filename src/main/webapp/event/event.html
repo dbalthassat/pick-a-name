@@ -1,21 +1,29 @@
-<md-content>
-	<section class="jumbotron">
+<div class="container">
+	<did class="center-content">
 		<h1>Tu participes à l'évènement <em>{{ event.eventName }}</em> !</h1>
-	</section>
-	<section layout="column" layout-align="center" layout-padding class="center">
-		<form class="lead" name="form" ng-submit="form.$valid && event.register(form)" novalidate>
-			<md-input-container md-is-error="form.firstname.$invalid && (form.$submitted || form.firstname.$dirty)">
-				<label>Quel est ton prénom ?</label>
-				<input name="firstname" ng-model="event.firstname" required exists-in-event="{{ event.id }}">
-				<ng-messages for="form.firstname.$error" role="alert" ng-show="form.firstname.$touched" class="error-messages" multiple>
-					<ng-message when="required">On a vraiment besoin de ton prénom que tu connaisses la personne qui te sera liée pendant cet évènement ;)</ng-message>
-					<ng-message when="exists-in-event">Tu n'es pas inscrit à l'évènement ! Tu devrais contacter l'organisateur, c'est vraiment pas sympa...</ng-message>
-				</ng-messages>
-			</md-input-container>
-			<md-input-container>
-				<md-button class="md-raised">Je participe !</md-button>
-			</md-input-container>
-		</form>
-	</section>
-</md-content>
+		<section>
+			<form class="form-inline"
+				  name="form"
+				  ng-submit="event.register(form)" novalidate>
+				<div class="form-group">
+					<label for="firstname">Quel est ton prénom ?</label>
+					<input id="firstname" class="form-control"
+						   name="firstname" ng-model="event.firstname" autocomplete="off"
+						   required validation-event-firstname ng-model-options="{ updateOn: 'default blur', debounce: { default: 300, blur: 0 } }">
+				</div>
+				<button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.firstname.$pending">
+					Je participe !
+				</button>
+				<p class="error-message">
+					<ng-messages for="form.firstname.$error" role="alert" ng-show="(form.firstname.$dirty || form.firstname.$touched) && form.firstname.$invalid">
+						<ng-message when="required" class="error-message">On a vraiment besoin de ton prénom pour que tu connaisses la personne qui te sera liée pendant cet évènement ;)</ng-message>
+						<ng-message when="exists-in-event" class="error-message">Tu n'es pas inscrit à l'évènement ! Tu devrais contacter l'organisateur, c'est vraiment pas sympa...</ng-message>
+						<ng-message when="already-has-friend" class="error-message">Tu es déjà lié à quelqu'un pour cette soirée, pas besoin de s'inscrire plusieurs fois !</ng-message>
+					</ng-messages>
+				</p>
+			</form>
+		</section>
+	</div>
+
+</div>
 
