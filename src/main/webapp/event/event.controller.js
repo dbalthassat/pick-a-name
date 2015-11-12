@@ -1,12 +1,14 @@
 export class EventController {
 	// TODO create a service instead of calling Restangular here.
-	constructor ($state, $stateParams, Restangular) {
+	constructor ($state, $stateParams, Restangular, $timeout) {
 		'ngInject';
 		var vm = this;
-		this.id = $stateParams.id;
-		this.Restangular = Restangular;
+		vm.$timeout = $timeout;
+		vm.id = $stateParams.id;
+		vm.Restangular = Restangular;
+		vm.state = 'form';
 		var restEvent = Restangular.all('events');
-		var promise = restEvent.get(this.id);
+		var promise = restEvent.get(vm.id);
 
 		promise.then(function(event) {
 			if($stateParams.slug !== event.slug) {
@@ -22,7 +24,17 @@ export class EventController {
 		});
 	}
 
-	register(form) {
-		console.log('register');
+	register() {
+		var vm = this;
+		vm.state = 'wait';
+		vm.$timeout(function() {
+			vm.Restangular.all('events/'+vm.id+'/persons/'+vm.firstname).customPUT().then(function(data) {
+				vm.friend = data.friend;
+				vm.state = 'done';
+			}, function() {
+				// do nothing, errors are handle by validators
+				console.log('error');
+			});
+		}, 2000);
 	}
 }

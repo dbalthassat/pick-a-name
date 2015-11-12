@@ -8,17 +8,16 @@ export function ValidationEventFirstnameDirective($q, $timeout, Restangular) {
 			var _event;
 			var previousValidator;
 
-			model.$asyncValidators['exists-in-event'] = function(modelValue) {
+			model.$asyncValidators['exists-in-event'] = function(modelValue, viewValue) {
 				previousValidator = null;
 				_event = null;
 				var def = $q.defer();
-				if(!modelValue) {
+				if(!viewValue) {
 					def.resolve();
 				} else {
 					var restEvent = Restangular.all('events/1/persons');
-					var promise = restEvent.get(modelValue);
+					var promise = restEvent.get(viewValue);
 					promise.then(function(event) {
-						console.log(event);
 						if(!event) {
 							def.reject();
 						} else {
@@ -35,13 +34,11 @@ export function ValidationEventFirstnameDirective($q, $timeout, Restangular) {
 
 			model.$asyncValidators['already-has-friend'] = function(modelValue) {
 				var def = $q.defer();
-				if(!_event || !previousValidator) {
+				if(!previousValidator) {
 					def.resolve();
-				} else if(modelValue !== _event.name) {
-					def.reject();
 				} else {
 					previousValidator.then(function() {
-						if(_event.hasFriend) {
+						if(_event && _event.hasFriend || modelValue !== _event.name) {
 							def.reject();
 						} else {
 							def.resolve();

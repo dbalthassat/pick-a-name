@@ -1,15 +1,15 @@
 <div class="container">
-	<did class="center-content">
+	<div class="center-content">
 		<h1>Tu participes à l'évènement <em>{{ event.eventName }}</em> !</h1>
-		<section>
+		<section ng-if="event.state == 'form'">
 			<form class="form-inline"
 				  name="form"
-				  ng-submit="event.register(form)" novalidate>
+				  ng-submit="event.register()" novalidate>
 				<div class="form-group">
 					<label for="firstname">Quel est ton prénom ?</label>
 					<input id="firstname" class="form-control"
 						   name="firstname" ng-model="event.firstname" autocomplete="off"
-						   required validation-event-firstname ng-model-options="{ updateOn: 'default blur', debounce: { default: 300, blur: 0 } }">
+						   required validation-event-firstname ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }">
 				</div>
 				<button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.firstname.$pending">
 					Je participe !
@@ -23,7 +23,16 @@
 				</p>
 			</form>
 		</section>
-	</div>
+		<section ng-if="event.state == 'wait'">
+			<div class="ball-loader">
+				Loading…
+			</div>
+		</section>
+		<section ng-if="event.state == 'done'">
+			<h3>Tu dois offrir un cadeau à... <strong>{{ event.friend }}</strong> !</h3>
 
+			<p>Note bien son nom, une fois que tu auras quitté cette page, tu ne pourras pas le retrouver</p>
+		</section>
+	</div>
 </div>
 
