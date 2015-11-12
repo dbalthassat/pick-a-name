@@ -17,5 +17,6 @@ coverage/
 .sass-cache/
 .idea/
 .tmp/
+target/
 dist/
 *.log

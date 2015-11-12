@@ -59,6 +59,7 @@ public class Event implements Serializable, Slugable {
       return slug;
     }
 
+	@Override
 	public void setSlug(String slug) {
       this.slug = slug;
     }
