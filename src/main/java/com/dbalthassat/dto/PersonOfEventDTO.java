@@ -1,6 +1,6 @@
 package com.dbalthassat.dto;
 
-public class EventPersonDisplayDTO {
+public class PersonOfEventDTO {
 	private Long eventId;
 	private PersonDTO person;
 

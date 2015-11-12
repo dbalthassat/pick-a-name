@@ -22,7 +22,7 @@ public class Event implements Serializable, Slugable {
     private String slug;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.event", cascade = CascadeType.ALL)
-    private Set<EventPerson> eventPersons;
+    private Set<PersonOfEvent> persons;
 
     public Event() {
     }
@@ -47,12 +47,12 @@ public class Event implements Serializable, Slugable {
         this.name = name;
     }
 
-	public Set<EventPerson> getEventPersons() {
-		return eventPersons;
+	public Set<PersonOfEvent> getPersons() {
+		return persons;
 	}
 
-	public void setEventPersons(Set<EventPerson> eventPersons) {
-		this.eventPersons = eventPersons;
+	public void setPersons(Set<PersonOfEvent> persons) {
+		this.persons = persons;
 	}
 
 	public String getSlug() {

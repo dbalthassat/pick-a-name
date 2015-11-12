@@ -1,6 +1,6 @@
 package com.dbalthassat.utils;
 
-import com.dbalthassat.entity.EventPerson;
+import com.dbalthassat.entity.PersonOfEvent;
 import com.dbalthassat.entity.Person;
 import org.junit.Test;
 
@@ -16,32 +16,32 @@ public class FriendshipUtilsTest {
 
 	@Test(expected = IllegalStateException.class)
 	public void emptyFriendship() {
-		FriendshipUtils.findFriend(new EventPerson(null, new Person("toto")), Collections.emptyList());
+		FriendshipUtils.findFriend(new PersonOfEvent(null, new Person("toto")), Collections.emptyList());
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void lonelyMan() {
-		Set<EventPerson> set = new HashSet<>();
-		set.add(new EventPerson(null, new Person("toto")));
-		FriendshipUtils.findFriend(new EventPerson(null, new Person("toto")), set);
+		Set<PersonOfEvent> set = new HashSet<>();
+		set.add(new PersonOfEvent(null, new Person("toto")));
+		FriendshipUtils.findFriend(new PersonOfEvent(null, new Person("toto")), set);
 	}
 
 	@Test
 	public void couple() {
-		Set<EventPerson> set = new HashSet<>();
-		set.add(new EventPerson(null, new Person("toto")));
-		set.add(new EventPerson(null, new Person("tata")));
-		assertEquals("tata", FriendshipUtils.findFriend(new EventPerson(null, new Person("toto")), set).getName());
-		assertEquals("toto", FriendshipUtils.findFriend(new EventPerson(null, new Person("tata")), set).getName());
+		Set<PersonOfEvent> set = new HashSet<>();
+		set.add(new PersonOfEvent(null, new Person("toto")));
+		set.add(new PersonOfEvent(null, new Person("tata")));
+		assertEquals("tata", FriendshipUtils.findFriend(new PersonOfEvent(null, new Person("toto")), set).getName());
+		assertEquals("toto", FriendshipUtils.findFriend(new PersonOfEvent(null, new Person("tata")), set).getName());
 	}
 
 	@Test
 	public void three() {
 		for(int i = 0; i < 1000; ++i) {
-			Set<EventPerson> set = new HashSet<>();
-			EventPerson toto = new EventPerson(null, new Person("toto"));
-			EventPerson tata = new EventPerson(null, new Person("tata"));
-			EventPerson titi = new EventPerson(null, new Person("titi"));
+			Set<PersonOfEvent> set = new HashSet<>();
+			PersonOfEvent toto = new PersonOfEvent(null, new Person("toto"));
+			PersonOfEvent tata = new PersonOfEvent(null, new Person("tata"));
+			PersonOfEvent titi = new PersonOfEvent(null, new Person("titi"));
 			set.add(toto);
 			set.add(tata);
 			set.add(titi);
@@ -62,19 +62,19 @@ public class FriendshipUtilsTest {
 		playFriendshipBetweenEveryone(100, 1000);
 	}
 
-	private List<Set<EventPerson>> playFriendshipBetweenEveryone(int pplNumber, int loops) {
-		List<Set<EventPerson>> sets = new LinkedList<>();
+	private List<Set<PersonOfEvent>> playFriendshipBetweenEveryone(int pplNumber, int loops) {
+		List<Set<PersonOfEvent>> sets = new LinkedList<>();
 		for(int i = 0; i < loops; ++i) {
-			Set<EventPerson> list = new HashSet<>();
+			Set<PersonOfEvent> list = new HashSet<>();
 			for(int j = 0; j < pplNumber; ++j) {
-				list.add(new EventPerson(null, new Person("guy"+j)));
+				list.add(new PersonOfEvent(null, new Person("guy"+j)));
 			}
 			assertEquals(pplNumber, list.size());
-			for(EventPerson ep: list) {
+			for(PersonOfEvent ep: list) {
 				FriendshipUtils.findFriend(ep, list);
 			}
 			Set<String> checkingListFriend = new HashSet<>();
-			for(EventPerson ep: list) {
+			for(PersonOfEvent ep: list) {
 				assertNotEquals(ep.getPerson().getName(), ep.getFriend().getName());
 				checkingListFriend.add(ep.getFriend().getName());
 			}
@@ -91,13 +91,13 @@ public class FriendshipUtilsTest {
 		int pplNumber = 100;
 		int[] counts = new int[testNumber];
 		for(int i = 0; i < testNumber; ++i) {
-			List<Set<EventPerson>> sets = playFriendshipBetweenEveryone(pplNumber, loops);
+			List<Set<PersonOfEvent>> sets = playFriendshipBetweenEveryone(pplNumber, loops);
 			int count = 0;
-			for(Set<EventPerson> set: sets) {
-				for(Set<EventPerson> compare: sets) {
+			for(Set<PersonOfEvent> set: sets) {
+				for(Set<PersonOfEvent> compare: sets) {
 					if(set != compare) {
-						for(EventPerson ep: set) {
-							for(EventPerson epCompare: compare) {
+						for(PersonOfEvent ep: set) {
+							for(PersonOfEvent epCompare: compare) {
 								if(ep.getPerson().equals(epCompare.getPerson())) {
 									if(ep.getFriend().equals(epCompare.getFriend())) {
 										count++;

@@ -1,9 +1,9 @@
 package com.dbalthassat.service;
 
-import com.dbalthassat.dto.EventPersonDisplayDTO;
+import com.dbalthassat.dto.PersonOfEventDTO;
 import com.dbalthassat.dto.PersonDTO;
 import com.dbalthassat.entity.Event;
-import com.dbalthassat.entity.EventPerson;
+import com.dbalthassat.entity.PersonOfEvent;
 import com.dbalthassat.exception.BadRequestException;
 import com.dbalthassat.exception.NotFoundException;
 import com.dbalthassat.mapper.EventPersonMapper;
@@ -15,38 +15,38 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class EventPersonService {
+public class PersonOfEventService {
 	@Autowired
 	private EventEntityService eventEntityService;
 
 	@Autowired
 	private EventPersonEntityService eventPersonEntityService;
 
-	public EventPersonDisplayDTO find(Long eventId, String firstname) throws NotFoundException {
-		EventPerson eventPerson = findEventPerson(eventId, firstname);
-		return EventPersonMapper.map(eventPerson);
+	public PersonOfEventDTO find(Long eventId, String firstname) throws NotFoundException {
+		PersonOfEvent personOfEvent = findEventPerson(eventId, firstname);
+		return EventPersonMapper.map(personOfEvent);
 	}
 
 	public PersonDTO findFriend(Long eventId, String firstname) throws NotFoundException, BadRequestException {
-		EventPerson eventPerson = findEventPerson(eventId, firstname);
-		if(eventPerson.getFriend() != null) {
+		PersonOfEvent personOfEvent = findEventPerson(eventId, firstname);
+		if(personOfEvent.getFriend() != null) {
 			throw new BadRequestException("The person " + firstname + " already has a friend.");
 		}
-		eventPerson.setFriend(FriendshipUtils.findFriend(eventPerson, eventPerson.getEvent().getEventPersons()));
-		eventPersonEntityService.save(eventPerson);
-		PersonDTO person = PersonMapper.map(eventPerson);
-		PersonMapper.mapFriend(eventPerson, person);
+		personOfEvent.setFriend(FriendshipUtils.findFriend(personOfEvent, personOfEvent.getEvent().getPersons()));
+		eventPersonEntityService.save(personOfEvent);
+		PersonDTO person = PersonMapper.map(personOfEvent);
+		PersonMapper.mapFriend(personOfEvent, person);
 		return person;
 	}
 
 
 
-	private EventPerson findEventPerson(Long eventId, String firstname) throws NotFoundException {
+	private PersonOfEvent findEventPerson(Long eventId, String firstname) throws NotFoundException {
 		Event event = eventEntityService.find(eventId);
 		if(event == null) {
 			throw new NotFoundException("The event " + eventId + " doesn't exist.");
 		}
-		Optional<EventPerson> op = event.getEventPersons().stream()
+		Optional<PersonOfEvent> op = event.getPersons().stream()
 				.filter(e -> e.getPerson().getName().equals(firstname))
 				.findAny();
 		if(!op.isPresent()) {

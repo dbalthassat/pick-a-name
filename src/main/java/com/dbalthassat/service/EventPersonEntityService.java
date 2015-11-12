@@ -1,6 +1,6 @@
 package com.dbalthassat.service;
 
-import com.dbalthassat.entity.EventPerson;
+import com.dbalthassat.entity.PersonOfEvent;
 import com.dbalthassat.repository.EventPersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ public class EventPersonEntityService {
 	@Autowired
 	private EventPersonRepository eventPersonRepository;
 
-	public EventPerson save(EventPerson ep) {
+	public PersonOfEvent save(PersonOfEvent ep) {
 		return eventPersonRepository.save(ep);
 	}
 }

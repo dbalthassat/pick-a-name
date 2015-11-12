@@ -2,7 +2,7 @@ package com.dbalthassat.mapper;
 
 import com.dbalthassat.dto.EventDTO;
 import com.dbalthassat.entity.Event;
-import com.dbalthassat.entity.EventPerson;
+import com.dbalthassat.entity.PersonOfEvent;
 
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -18,7 +18,7 @@ public class EventMapper {
 		event.setId(dto.getId());
 		event.setName(dto.getName());
 		event.setSlug(dto.getSlug());
-		event.setEventPersons(dto.getPersons().stream().map(p -> new EventPerson(event, p)).collect(Collectors.toSet()));
+		event.setPersons(dto.getPersons().stream().map(p -> new PersonOfEvent(event, p)).collect(Collectors.toSet()));
 		return event;
 	}
 
@@ -36,7 +36,7 @@ public class EventMapper {
 	public static EventDTO mapPersons(Event event, EventDTO dto) {
 		Objects.requireNonNull(event);
 		Objects.requireNonNull(dto);
-		dto.setPersons(event.getEventPersons().stream().map(EventPerson::getPerson).collect(Collectors.toList()));
+		dto.setPersons(event.getPersons().stream().map(PersonOfEvent::getPerson).collect(Collectors.toList()));
 		return dto;
 	}
 }

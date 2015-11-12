@@ -1,7 +1,7 @@
 package com.dbalthassat.mapper;
 
-import com.dbalthassat.dto.EventPersonDisplayDTO;
-import com.dbalthassat.entity.EventPerson;
+import com.dbalthassat.dto.PersonOfEventDTO;
+import com.dbalthassat.entity.PersonOfEvent;
 
 /**
  * ${END}
@@ -9,13 +9,13 @@ import com.dbalthassat.entity.EventPerson;
  * @author dbalthassat
  */
 public class EventPersonMapper {
-	public static EventPersonDisplayDTO map(EventPerson eventPerson) {
-		if(eventPerson == null) {
+	public static PersonOfEventDTO map(PersonOfEvent personOfEvent) {
+		if(personOfEvent == null) {
 			return null;
 		}
-		EventPersonDisplayDTO dto = new EventPersonDisplayDTO();
-		dto.setEventId(eventPerson.getEvent().getId());
-		dto.setPerson(PersonMapper.map(eventPerson));
+		PersonOfEventDTO dto = new PersonOfEventDTO();
+		dto.setEventId(personOfEvent.getEvent().getId());
+		dto.setPerson(PersonMapper.map(personOfEvent));
 		return dto;
 	}
 }

@@ -9,18 +9,17 @@ import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 @Embeddable
-public class EventPersonId implements Serializable {
+public class PersonOfEventId implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonBackReference("event")
 	private Event event;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Person person;
 
-	public EventPersonId() {
+	public PersonOfEventId() {
 	}
 
-	public EventPersonId(Event event, Person person) {
+	public PersonOfEventId(Event event, Person person) {
 		this.event = event;
 		this.person = person;
 	}
