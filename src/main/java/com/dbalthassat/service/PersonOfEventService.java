@@ -1,13 +1,11 @@
 package com.dbalthassat.service;
 
-import com.dbalthassat.dto.PersonOfEventDTO;
-import com.dbalthassat.dto.PersonDTO;
 import com.dbalthassat.entity.Event;
 import com.dbalthassat.entity.PersonOfEvent;
 import com.dbalthassat.exception.BadRequestException;
 import com.dbalthassat.exception.NotFoundException;
-import com.dbalthassat.mapper.EventPersonMapper;
-import com.dbalthassat.mapper.PersonMapper;
+import com.dbalthassat.repository.EventRepository;
+import com.dbalthassat.repository.PersonOfEventRepository;
 import com.dbalthassat.utils.FriendshipUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,32 +15,27 @@ import java.util.Optional;
 @Service
 public class PersonOfEventService {
 	@Autowired
-	private EventEntityService eventEntityService;
+	private PersonOfEventRepository personOfEventRepository;
 
 	@Autowired
-	private EventPersonEntityService eventPersonEntityService;
+	private EventRepository eventRepository;
 
-	public PersonOfEventDTO find(Long eventId, String firstname) throws NotFoundException {
-		PersonOfEvent personOfEvent = findEventPerson(eventId, firstname);
-		return EventPersonMapper.map(personOfEvent);
+	public PersonOfEvent find(Long eventId, String firstname) throws NotFoundException {
+		return findEventPerson(eventId, firstname);
 	}
 
-	public PersonDTO findFriend(Long eventId, String firstname) throws NotFoundException, BadRequestException {
+	public PersonOfEvent findFriend(Long eventId, String firstname) throws NotFoundException, BadRequestException {
 		PersonOfEvent personOfEvent = findEventPerson(eventId, firstname);
 		if(personOfEvent.getFriend() != null) {
 			throw new BadRequestException("The person " + firstname + " already has a friend.");
 		}
 		personOfEvent.setFriend(FriendshipUtils.findFriend(personOfEvent, personOfEvent.getEvent().getPersons()));
-		eventPersonEntityService.save(personOfEvent);
-		PersonDTO person = PersonMapper.map(personOfEvent);
-		PersonMapper.mapFriend(personOfEvent, person);
-		return person;
+		personOfEventRepository.save(personOfEvent);
+		return personOfEvent;
 	}
 
-
-
 	private PersonOfEvent findEventPerson(Long eventId, String firstname) throws NotFoundException {
-		Event event = eventEntityService.find(eventId);
+		Event event = eventRepository.findOne(eventId);
 		if(event == null) {
 			throw new NotFoundException("The event " + eventId + " doesn't exist.");
 		}

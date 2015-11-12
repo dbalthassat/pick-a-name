@@ -8,7 +8,7 @@ import com.dbalthassat.entity.PersonOfEvent;
  *
  * @author dbalthassat
  */
-public class EventPersonMapper {
+public class PersonOfEventMapper {
 	public static PersonOfEventDTO map(PersonOfEvent personOfEvent) {
 		if(personOfEvent == null) {
 			return null;
