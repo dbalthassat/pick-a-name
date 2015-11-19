@@ -9,13 +9,13 @@
 					<label for="firstname">Quel est ton prénom ?</label>
 					<input id="firstname" class="form-control"
 						   name="firstname" ng-model="event.firstname" autocomplete="off"
-						   required validation-event-firstname ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }">
+						   required validation-event-firstname="{{ event.id }}" ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }">
 				</div>
 				<button type="submit" class="btn btn-primary" ng-disabled="form.$invalid || form.firstname.$pending">
 					Je participe !
 				</button>
 				<p class="error-message">
-					<ng-messages for="form.firstname.$error" role="alert" ng-show="(form.firstname.$dirty || form.firstname.$touched) && form.firstname.$invalid">
+					<ng-messages for="form.firstname.$error" role="alert" ng-show="(form.firstname.$dirty || form.firstname.$touched) && form.$invalid">
 						<ng-message when="required" class="error-message">On a vraiment besoin de ton prénom pour que tu connaisses la personne qui te sera liée pendant cet évènement ;)</ng-message>
 						<ng-message when="exists-in-event" class="error-message">Tu n'es pas inscrit à l'évènement ! Tu devrais contacter l'organisateur, c'est vraiment pas sympa...</ng-message>
 						<ng-message when="already-has-friend" class="error-message">Tu es déjà lié à quelqu'un pour cette soirée, pas besoin de s'inscrire plusieurs fois !</ng-message>
