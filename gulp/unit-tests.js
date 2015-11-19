@@ -11,7 +11,7 @@ var pathSrcHtml = [
 ];
 
 var pathSrcJs = [
-  path.join(conf.paths.tmp, '/serve/webapp/index.module.js')
+  path.join(conf.paths.tmp, '/serve/index.module.js')
 ];
 
 function runTests (singleRun, done) {
@@ -30,7 +30,7 @@ function runTests (singleRun, done) {
   }
 
   var localConfig = {
-    configFile: path.join(__dirname, '/../karma.conf.js'),
+    configFile: path.join(__dirname, '/../../../karma.conf.js'),
     singleRun: singleRun,
     autoWatch: !singleRun,
     reporters: reporters,

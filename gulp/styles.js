@@ -17,13 +17,13 @@ gulp.task('styles', function () {
   };
 
   var injectFiles = gulp.src([
-    path.join(conf.paths.src, '/webapp/**/*.scss'),
-    path.join('!' + conf.paths.src, '/webapp/index.scss')
+    path.join(conf.paths.src, '/**/*.scss'),
+    path.join('!' + conf.paths.src, '/index.scss')
   ], { read: false });
 
   var injectOptions = {
     transform: function(filePath) {
-      filePath = filePath.replace(conf.paths.src + '/webapp/', '');
+      filePath = filePath.replace(conf.paths.src + '/', '');
       return '@import "' + filePath + '";';
     },
     starttag: '// injector',
@@ -33,7 +33,7 @@ gulp.task('styles', function () {
 
 
   return gulp.src([
-    path.join(conf.paths.src, '/webapp/index.scss')
+    path.join(conf.paths.src, '/index.scss')
   ])
     .pipe($.inject(injectFiles, injectOptions))
     .pipe(wiredep(_.extend({}, conf.wiredep)))
@@ -41,6 +41,6 @@ gulp.task('styles', function () {
     .pipe($.sass(sassOptions)).on('error', conf.errorHandler('Sass'))
     .pipe($.autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest(path.join(conf.paths.tmp, '/serve/webapp/')))
+    .pipe(gulp.dest(path.join(conf.paths.tmp, '/serve/')))
     .pipe(browserSync.reload({ stream: true }));
 });

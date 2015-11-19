@@ -2,7 +2,6 @@
   "name": "pickAName",
   "version": "0.0.0",
   "dependencies": {
-	"angular-animate": "~1.4.7",
 	"angular-sanitize": "~1.4.7",
 	"angular-messages": "~1.4.7",
 	"jquery": "~2.1.4",
@@ -13,7 +12,6 @@
 	"malarkey": "yuanqing/malarkey#~1.3.1",
 	"angular-toastr": "~1.5.0",
 	"moment": "~2.10.6",
-	"animate.css": "~3.4.0",
 	"angular": "~1.4.7"
   },
   "devDependencies": {

@@ -11,12 +11,12 @@ var _ = require('lodash');
 
 gulp.task('inject', ['scripts', 'styles'], function () {
   var injectStyles = gulp.src([
-    path.join(conf.paths.tmp, '/serve/webapp/**/*.css'),
-    path.join('!' + conf.paths.tmp, '/serve/webapp/vendor.css')
+    path.join(conf.paths.tmp, '/serve/**/*.css'),
+    path.join('!' + conf.paths.tmp, '/serve/vendor.css')
   ], { read: false });
 
   var injectScripts = gulp.src([
-    path.join(conf.paths.tmp, '/serve/webapp/**/*.module.js')
+    path.join(conf.paths.tmp, '/serve/**/*.module.js')
   ], { read: false });
 
   var injectOptions = {

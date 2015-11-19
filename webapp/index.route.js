@@ -3,13 +3,13 @@ export function routerConfig ($stateProvider, $urlRouterProvider) {
 	$stateProvider
 		.state('events', {
 			url: '/events/{id:int}/{slug:(?:[a-z]{1}[a-z-]*)?}',
-			templateUrl: 'webapp/event/event.html',
+			templateUrl: 'event/event.html',
 			controller: 'EventController',
 			controllerAs: 'event'
 		})
 		.state('eventsWithoutSlug', {
 			url: '/events/{id:int}',
-			templateUrl: 'webapp/event/event.html',
+			templateUrl: 'event/event.html',
 			controller: 'EventController',
 			controllerAs: 'event'
 		});

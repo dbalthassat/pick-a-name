@@ -40,14 +40,14 @@ function webpackWrapper(watch, test, callback) {
     }
   };
 
-  var sources = [ path.join(conf.paths.src, '/webapp/index.module.js') ];
+  var sources = [ path.join(conf.paths.src, '/index.module.js') ];
   if (test) {
-    sources.push(path.join(conf.paths.src, '/webapp/**/*.spec.js'));
+    sources.push(path.join(conf.paths.src, '/**/*.spec.js'));
   }
 
   return gulp.src(sources)
     .pipe(webpack(webpackOptions, null, webpackChangeHandler))
-    .pipe(gulp.dest(path.join(conf.paths.tmp, '/serve/webapp')));
+    .pipe(gulp.dest(path.join(conf.paths.tmp, '/serve')));
 }
 
 gulp.task('scripts', function () {
